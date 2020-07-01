@@ -1,0 +1,12 @@
+{
+  "name": "zarax",
+  "displayName": "zarax",
+  "expo": {
+    "name": "zarax",
+    "slug": "zarax",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
