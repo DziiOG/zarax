@@ -204,7 +204,8 @@ export function getScreams() {
           payload: res.data,
         });
        // console.log("i have been successful you can check props now");
-        // console.log(res.data);
+        //console.log(res.data);
+    
       })
       .catch((err) => {
         dispatch({

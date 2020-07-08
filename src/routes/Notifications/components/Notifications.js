@@ -6,7 +6,15 @@ import CardComponent from './CardComponent';
 
 export default class Notifications extends Component {
     render() {
-        return (
+
+
+        
+
+        return ( 
+
+            
+
+
             <ProductConsumer>
                 {
                     (value)=> (

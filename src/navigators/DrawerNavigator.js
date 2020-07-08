@@ -29,7 +29,7 @@ import RootStackScreen from './RootStackNavigator';
 import { signUserOut as signOut } from '../routes/SignIn/modules/signinscreen';
 import { getScreams } from '../routes/Home/modules/home'
 import HomeContainer from '../routes/Home/containers/HomeContainer';
-import { ProductConsumer } from '../context';
+import { ProductConsumer, ProductProvider } from '../context';
 import ProfileContainer from '../routes/Profile/containers/ProfileContainer';
 import NotificationsContainer from '../routes/Notifications/containers/NotificationsContainer';
 import ZaraxComponentContainer from '../routes/ZaraxDialog/containers/ZaraxComponentContainer';
@@ -51,7 +51,8 @@ const MainBottomTab = createBottomTabNavigator();
 const mapStateToProps = state => ({
     token: state.signin.userToken ,
     userData: state.signin.userData || {},
-    loading: state.home.loading
+    loading: state.home.loading,
+    welcome: state.signin.welcome
     
 });
 
@@ -67,6 +68,7 @@ const checkAuth = (token) => {
     const decodedToken = jwtDecode(token);
     if(decodedToken.exp * 1000 < Date.now()){
       return false;
+      
     }else {
       return true
     }
@@ -83,20 +85,33 @@ const checkAuth = (token) => {
 
 
 
-function MyDrawer({navigation, token, signOut,  userData }) {
+function MyDrawer({navigation, token, signOut,  userData, welcome }) {
   console.log(checkAuth(token))
   return (
    <Fragment>
       {
         (checkAuth(token)) ?
-        <NavigationContainer >
-          <Drawers.Navigator  initialRouteName="Home"    drawerContent={(props)=> <CustomDrawerContent {...props} signOut={signOut} userData={userData}></CustomDrawerContent>}>
-            <Drawers.Screen name="Home"  component={MainTab} />
-            <Drawers.Screen name="Profile"  component={ProfileStackScreen} />
-            <Drawers.Screen name="Zarax"  component={ZaraxDialogStackScreen} />
-            <Drawers.Screen name="User"  component={UserProfileStackScreen} />
-          </Drawers.Navigator>
-        </NavigationContainer>        
+        userData && welcome ?
+        <ProductProvider>
+          <NavigationContainer >
+            <Drawers.Navigator  initialRouteName="Home"    drawerContent={(props)=> <CustomDrawerContent {...props} signOut={signOut} userData={userData}></CustomDrawerContent>}>
+              <Drawers.Screen name="Home"  component={MainTab} />
+              <Drawers.Screen name="Profile"  component={ProfileStackScreen} />
+              <Drawers.Screen name="Zarax"  component={ZaraxDialogStackScreen} />
+              <Drawers.Screen name="User"  component={UserProfileStackScreen} />
+            </Drawers.Navigator>
+          </NavigationContainer>        
+        </ProductProvider> :
+        <View style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          flex: 1,
+          width: '100%',
+          flexDirection: 'column'
+      }}>
+          <LottieView source={require('../assets/still.json')} autoPlay loop />
+          <Text>Please Wait while we fetch your details...</Text>
+      </View>
         : 
         <NavigationContainer>
         <RootStackScreen></RootStackScreen>
@@ -178,6 +193,12 @@ function ZaraxDialogStackScreen({navigation}){
                           onPress={()=>{
                             navigation.goBack();
                             
+                          }}
+                          style={{
+                            height: 50,
+                            width:50,
+                            justifyContent: "center",
+                            alignItems: 'center'
                           }}
                           >
                                   <MyIcon 
@@ -274,6 +295,7 @@ function NotificationStackScreen({navigation}) {
                         onPress={()=>{
                           navigation.openDrawer();
                         }}
+                       
                         >
                                 <Avatar.Image source={{
                                     uri: value.imageUrl 
@@ -315,6 +337,12 @@ function ProfileStackScreen({navigation}){
                       onPress={()=>{
                         navigation.goBack();
                         
+                      }}
+                      style={{
+                        height: 50,
+                        width:50,
+                        justifyContent: "center",
+                        alignItems: 'center'
                       }}
                       >
                               <MyIcon 
@@ -359,6 +387,12 @@ function UserProfileStackScreen({navigation}){
                       onPress={()=>{
                         navigation.goBack();
                       
+                      }}
+                      style={{
+                        height: 50,
+                        width:50,
+                        justifyContent: "center",
+                        alignItems: 'center'
                       }}
                       >
                               <MyIcon 

@@ -92,7 +92,7 @@ export class SignUpScreen extends Component {
           const FBIToken = `Bearer ${results.data.token}`;
           this.props.getUserFBIToken(FBIToken);
 
-          this.props.getUserToken(results.data.token);
+ 
           axios.defaults.headers.common['Authorization'] = FBIToken;
           const header = {
               headers: {
@@ -100,9 +100,18 @@ export class SignUpScreen extends Component {
               }
             };
           this.props.getUserData(header);
-
+          this.props.getUserToken(results.data.token);
 
           }).then(()=>{
+            this.setState({
+                email:'',
+                password:'',
+                check_textInputChange: false,
+                secureTextEntry: true,
+                errors: {},
+                token: '',
+                loading: false,
+              })
           })
           .catch((err) => {
            // console.log(err.response.data);

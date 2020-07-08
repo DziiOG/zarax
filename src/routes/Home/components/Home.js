@@ -15,7 +15,7 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-     
+     activeRefresh: false
     };
   }
 
@@ -30,9 +30,10 @@ class Home extends Component {
   //this.props.getUserData(header);
  // this.props.getThisUserScreams("user", header)
 
-  
-
   }
+
+
+
 
   render() {
     
@@ -43,8 +44,8 @@ class Home extends Component {
      
     {
       (this.props.loading == false) ?
-      <Content on >
-        <List   >
+      <Content  >
+        <List  >
           {
             (this.props.zarax.length > 0) ?
             (
@@ -64,8 +65,8 @@ class Home extends Component {
         </List>
       </Content> : 
       <Fragment>
-          <Content  >
-        <List   >
+          <Content   >
+        <List  >
           <ListItem>
           <View style={{
             justifyContent: 'center',

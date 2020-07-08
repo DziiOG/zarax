@@ -122,7 +122,8 @@ export default class ZaraxComponent extends Component {
             
             <ListItem style={{
                 borderBottomColor: '#fff',
-                
+              
+                           
               }} button avatar>
                 <Left>
                     <TouchableOpacity
@@ -154,7 +155,9 @@ export default class ZaraxComponent extends Component {
 
                     
                     flexDirection: 'column',
-                    width: width * 0.6
+                    width: width * 0.6,
+                    backgroundColor: "#fff",
+                  
                     
                     }}>
                         <TouchableOpacity
@@ -164,22 +167,32 @@ export default class ZaraxComponent extends Component {
                                   Authorization: this.state.FBIToken,
                                 }
                               };
-                            this.props.getScream(screamId, header);
-                            this.props.navigation.navigate('Zarax')
+                              this.props.navigation.navigate('Zarax')
+                              this.props.getScream(screamId, header);
                         }}
                         >
 
-                                <Body >
+                                <Body 
+                               
+                                >
                                     <Text>{userHandle}</Text>
                                     <Text style={{
                                         marginBottom: 10
                                     }} note>{body}</Text>
                                 </Body>
                         </TouchableOpacity>
+                        
 
                     <View
                     style={{
-                        flexDirection: 'row'
+                        flexDirection: 'row',
+                        
+                        bottom: 20,
+                        justifyContent: 'space-evenly',
+                        width: width * 0.8,
+                       
+
+                        
                     }}
                     >
 
@@ -189,41 +202,44 @@ export default class ZaraxComponent extends Component {
                          }}
                         style={{
 
-                            position: 'relative',
-                            bottom: 20,
-                            left: 20,
-                            flexDirection: 'row'
+                            
+                            flexDirection: 'row',
+                            
                             
 
                             }}>
-                                    <MyIcon name={this.likedZarax() == false ? "favorite-border" : "favorite"} color={this.likedZarax() == false ? "#d2d2d2" : "#ff0000"} size={18}></MyIcon>
+                                    <MyIcon name={this.likedZarax() == false ? "favorite-border" : "favorite"} color={this.likedZarax() == false ? "#000" : "#ff0000"} size={18}></MyIcon>
                                     <Text style={{
                                         fontSize: 9,
-                                        color: this.likedZarax() == false ? "#d2d2d2" : "#ff0000"
+                                        color: this.likedZarax() == false ? "#000" : "#ff0000"
                                     }} note>{likeCount === 0 ? "": likeCount}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity 
-                            onPress={()=>{
-                                this.handleOnCommentPress()
-                            }}
+                        <View 
+                           
 
                         style={{
                             
-                            position: 'relative',
-                            bottom: 20,
-                            left: 20,
                             flexDirection: 'row',
-                            paddingHorizontal: 15
+                            paddingHorizontal: 15,
+                            
 
 
                             }}>
-                                    <MyIcon2 name={"chat-outline"} color="#d2d2d2" size={18}></MyIcon2>
+                                    <MyIcon2 name={"chat-outline"} color="#000" size={18}></MyIcon2>
                                     <Text style={{
                                         fontSize: 9,
-                                        color: "#d2d2d2"
+                                        color: "#000"
                                     }} note>{commentCount === 0 ? "" : commentCount}</Text>
-                        </TouchableOpacity>
-                        
+                        </View>
+                        <View
+                            style={{
+                                
+                                width: 30,
+                                justifyContent: "center",
+                                alignContent: 'center'
+                            }}
+                        >
+
                                     {
                                      (this.props.userData.credentials.handle == userHandle) ?
                                      <Fragment>
@@ -236,11 +252,9 @@ export default class ZaraxComponent extends Component {
 
                                             style={{
                                                 
-                                                position: 'relative',
-                                                bottom: 20,
-                                                left: 20,
+                                                
                                                 flexDirection: 'row',
-                                                paddingHorizontal: width * 0.27
+                                                
                                                 
 
 
@@ -254,7 +268,7 @@ export default class ZaraxComponent extends Component {
                                                     
                                                     width: width * 0.9, 
                                                     height: height *0.25,  
-                                                    backgroundColor: "#d2d2d2", 
+                                                    backgroundColor: "#000", 
                                                     borderBottomLeftRadius: 30,
                                                     borderTopRightRadius: 30,  
                                                     borderTopLeftRadius: 30,
@@ -306,11 +320,13 @@ export default class ZaraxComponent extends Component {
 
                                             </View>
                                         </Modal>
-
+                                     </Fragment>                               
                                             
-                                     </Fragment>
+                                     
                                             : null
+                                            
                                     }
+                        </View>
                                  
 
                     </View>

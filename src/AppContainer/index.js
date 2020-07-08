@@ -27,11 +27,11 @@ export default class AppContainer extends Component {
             }}>
                 <LottieView source={require('../assets/still.json')} autoPlay loop />
             </View>} persistor={this.props.persistor}>
-                <ProductProvider>
+              
                     <Root>
                             <MyDrawer></MyDrawer>
                     </Root>
-                </ProductProvider>
+              
             </PersistGate>
            
         </Provider>

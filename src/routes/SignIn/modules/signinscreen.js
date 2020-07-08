@@ -4,12 +4,23 @@ import final from '../../Home/modules/actionConstants';
 import axios from 'axios';
 
 const { 
-    GET_USER_TOKEN,  SIGN_USER_OUT, GET_FBITOKEN, SET_USER,  } = constants;
+    GET_USER_TOKEN,  SIGN_USER_OUT, GET_FBITOKEN, SET_USER, WELCOM, MARK_NOTIFICATIONS_READ } = constants;
 
-const {LIKE_SCREAM, UNLIKE_SCREAM, DELETE_SCREAM }  = final;  
+const {LIKE_SCREAM, UNLIKE_SCREAM, DELETE_SCREAM } = final;  
 
 //ACTIONS
-
+export function markNotificationsRead(notificationsIds, header){
+    return((dispatch) =>{
+       axios.post('/user', notificationsIds, header).then(()=>{
+           dispatch({
+               type: MARK_NOTIFICATIONS_READ,
+               payload: null
+           })
+       }).catch((err)=>{
+           console.log(err);
+       })
+    })
+}
 
 export function getUserData(header){
     //console.log("I am being executed");
@@ -22,11 +33,27 @@ export function getUserData(header){
            })
          //  console.log("i have been successful you can check props now");
           // console.log(res.data)
-       }).catch((err)=>{
+       })
+       .then(()=>{
+           dispatch({
+               type: WELCOME,
+               payload: true
+           })
+       })
+       .catch((err)=>{
            console.log(err)
        })
    })
  
+}
+
+export function setWelcome(){
+    return((dispatch)=>{
+        dispatch({
+            type: WELCOME,
+            payload: false
+        })
+    })
 }
 
 
@@ -57,6 +84,12 @@ export function signUserOut(){
             type: SIGN_USER_OUT,
             payload: ""
         })
+
+        dispatch({
+            type: WELCOME,
+            payload: false
+        })
+
     })
 }
 
@@ -133,12 +166,27 @@ function handleSetUser(state, action){
     })
 }
 
+function handleWelcome(state, action){
+    return update(state, {
+        welcome: {
+            $set: action.payload
+        }
+    })
+}
 
+function handleMarkNotificationsRead(state, action){
+    state.userData.notifications.forEach((not) => (not.read = true));
+
+    return{
+        ...state
+    }
+}
 
 const initialState = {
     userToken: "",
     FBIToken:"",
-    userData: {}
+    userData: {},
+    welcome: false
 };
 
 const ACTION_HANDLERS = {
@@ -148,9 +196,9 @@ const ACTION_HANDLERS = {
     GET_FBITOKEN: handleGetFBIToken,
     SET_USER: handleSetUser,
     LIKE_SCREAM: handleLikeScream,
-    UNLIKE_SCREAM: handleUnLikeScream
-    
- 
+    UNLIKE_SCREAM: handleUnLikeScream,
+    WELCOME: handleWelcome,
+    MARK_NOTIFICATIONS_READ: handleMarkNotificationsRead
  }
 
 export function signinscreenReducer (state = initialState, action){

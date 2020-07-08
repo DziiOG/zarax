@@ -7,7 +7,9 @@ import LottieView from 'lottie-react-native';
 
 export class SplashScreen extends Component {
 
-    
+    componentDidMount(){
+        this.props.setWelcome()
+    }    
 
     render() {
         return (
