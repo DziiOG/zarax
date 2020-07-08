@@ -25,7 +25,7 @@ export default class AppContainer extends Component {
                 flex: 1,
                 width: '100%'
             }}>
-                <LottieView source={require('../assets/loading.json')} autoPlay loop />
+                <LottieView source={require('../assets/still.json')} autoPlay loop />
             </View>} persistor={this.props.persistor}>
                 <ProductProvider>
                     <Root>

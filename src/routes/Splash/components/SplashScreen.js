@@ -13,7 +13,7 @@ export class SplashScreen extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.header}>
-                     <LottieView source={require('../../../assets/bird.json')} autoPlay loop />
+                     <LottieView source={require('../../../assets/bird.json')} autoPlay  />
                 </View>
                 <Animatable.View  
                 animation="fadeInUpBig"

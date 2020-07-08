@@ -79,21 +79,30 @@ export class SignUpScreen extends Component {
           .post('/signup', {
             email: this.state.email,
             password: this.state.password,
-            fullName: this.state.username
+            confirmPassword: this.state.password,
+            handle: this.state.username
           })
           .then(results => {
            // console.log(results.data.token);
-            this.setState({
-              loading: false,
-              token: results.data.token,
-            });
+           this.setState({
+            loading: false,
+            
+          });
 
-            this.props.getUserToken(results.data);
-           // this.props.getUserID(results.data.userId)
+          const FBIToken = `Bearer ${results.data.token}`;
+          this.props.getUserFBIToken(FBIToken);
 
-            //this.props.getUserName(results.data.userId)
-            //console.log(this.props.userID)
-    
+          this.props.getUserToken(results.data.token);
+          axios.defaults.headers.common['Authorization'] = FBIToken;
+          const header = {
+              headers: {
+                Authorization: FBIToken,
+              }
+            };
+          this.props.getUserData(header);
+
+
+          }).then(()=>{
           })
           .catch((err) => {
            // console.log(err.response.data);

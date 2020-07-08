@@ -2,6 +2,7 @@ import 'react-native-gesture-handler'
 import React from 'react';
 import { StyleSheet, Text, View, StatusBar } from 'react-native';
 import Root from './src/main';
+import axios from 'axios';
 
 
 
@@ -21,3 +22,5 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+axios.defaults.baseURL = "https://europe-west1-zarax-220f5.cloudfunctions.net/api";

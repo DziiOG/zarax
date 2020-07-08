@@ -15,7 +15,7 @@ const log = createLogger({
 const persistConfig = {
     key: 'root',
     storage: AsyncStorage,
-    whitelist: ['home'],
+    whitelist: ['signup', 'signin', 'home' ],
     blacklist: []
   }
 

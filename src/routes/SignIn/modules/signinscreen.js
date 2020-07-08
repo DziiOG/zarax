@@ -1,18 +1,34 @@
 import update from "react-addons-update";
 import constants from './actionConstants';
+import final from '../../Home/modules/actionConstants';
+import axios from 'axios';
 
 const { 
-    GET_USER_ID, GET_USER_TOKEN, GET_USER_NAME, SIGN_USER_OUT } = constants;
+    GET_USER_TOKEN,  SIGN_USER_OUT, GET_FBITOKEN, SET_USER,  } = constants;
+
+const {LIKE_SCREAM, UNLIKE_SCREAM, DELETE_SCREAM }  = final;  
 
 //ACTIONS
-export function getUserID(userId){
-    return(dispatch)=>{
-        dispatch({
-            type: GET_USER_ID,
-            payload: userId
-        })
-    }
+
+
+export function getUserData(header){
+    //console.log("I am being executed");
+  
+    return((dispatch)=>{
+       axios.get('/user', header).then((res)=> {
+           dispatch({
+               type:SET_USER,
+               payload: res.data
+           })
+         //  console.log("i have been successful you can check props now");
+          // console.log(res.data)
+       }).catch((err)=>{
+           console.log(err)
+       })
+   })
+ 
 }
+
 
 export function getUserToken(token){
     return((dispatch)=>{
@@ -23,25 +39,17 @@ export function getUserToken(token){
     })
 }
 
-export function getUserName(id){
-    axios
-    .post('https://us-central1-closefriend-1333a.cloudfunctions.net/api/user', {
-        userId: id
-    })
-    .then(results => {
-        return((dispatch)=>{
-            dispatch({
-                type: GET_USER_NAME,
-                payload: results.data
-            })
+
+export function getUserFBIToken(token){
+    return((dispatch)=>{
+        dispatch({
+            type: GET_FBITOKEN,
+            payload: token
         })
-        
-    
     })
-    .catch(err => {
-    console.log(err);
-    });
 }
+
+
 
 export function signUserOut(){
     return((dispatch)=>{
@@ -56,13 +64,7 @@ export function signUserOut(){
 
 
 //Action handler
-function handleGetUserID(state, action){
-    return update(state, {
-        userID: {
-            $set: action.payload
-        }
-    })
-}
+
 
 function handleGetUserToken(state, action){
     return update(state, {
@@ -72,33 +74,82 @@ function handleGetUserToken(state, action){
     })
 }
 
-function handleGetUserName(state, action){
+
+function handleGetFBIToken(state, action){
     return update(state, {
-        username: {
+        FBIToken: {
             $set: action.payload
-        }
+        } 
     })
 }
+
+
 
 function handleSignUserOut(state, action){
 return update(state, {
         userToken: {
             $set: action.payload
+        },
+        FBIToken: {
+            $set: action.payload
         }
     })
 }
+function handleLikeScream(state, action){
+    return {
+        ...state,
+        userData : {
+            ...state.userData,
+            likes : [
+                ...state.userData.likes,
+                {
+                    userHandle: state.userData.credentials.handle,
+                    screamId: action.payload.screamId
+                }
+
+            ]
+        }
+        
+    }
+}
+
+function handleUnLikeScream(state, action){
+    return {
+        ...state,
+        userData: {
+            ...state.userData,
+            likes: state.userData.likes.filter((like) => like.screamId !== action.payload.screamId)
+        }
+    }
+}
+
+
+function handleSetUser(state, action){
+    return update(state, {
+        userData: {
+            $set: action.payload
+        }
+        
+    })
+}
+
+
 
 const initialState = {
-    
     userToken: "",
-    username: ""
+    FBIToken:"",
+    userData: {}
 };
 
 const ACTION_HANDLERS = {
-    GET_USER_ID : handleGetUserID,
+   
     GET_USER_TOKEN: handleGetUserToken,
-    GET_USER_NAME: handleGetUserName,
-    SIGN_USER_OUT: handleSignUserOut
+    SIGN_USER_OUT: handleSignUserOut,
+    GET_FBITOKEN: handleGetFBIToken,
+    SET_USER: handleSetUser,
+    LIKE_SCREAM: handleLikeScream,
+    UNLIKE_SCREAM: handleUnLikeScream
+    
  
  }
 

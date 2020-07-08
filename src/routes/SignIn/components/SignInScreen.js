@@ -72,9 +72,17 @@ export class SignInScreen extends Component {
               token: results.data.token,
             });
 
-            this.props.getUserToken(results.data);
-            this.props.getUserName(results.data.userId)
+            const FBIToken = `Bearer ${results.data.token}`;
+            this.props.getUserFBIToken(FBIToken);
 
+            this.props.getUserToken(results.data.token);
+            axios.defaults.headers.common['Authorization'] = FBIToken;
+            const header = {
+                headers: {
+                  Authorization: FBIToken,
+                }
+              };
+            this.props.getUserData(header);
 
             
            
@@ -82,6 +90,9 @@ export class SignInScreen extends Component {
             //console.log(results.data) 
             //console.log(this.props.userToken)
     
+          }).then(()=>{
+             
+              
           })
           .catch((err) => {
            // console.log(err.response.data);
@@ -194,6 +205,7 @@ export class SignInScreen extends Component {
                        secureTextEntry={this.state.secureTextEntry ? true : false}
                        style={styles.textInput}
                        autoCapitalize="none"
+                       
                        onChangeText={(val)=> this.handlePasswordChange(val)}
                        ></TextInput>
                        <TouchableOpacity onPress={()=> {this.updateSecureTextEntry()}}>
