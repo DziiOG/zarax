@@ -167,7 +167,8 @@ export default class ZaraxComponent extends Component {
                                   Authorization: this.state.FBIToken,
                                 }
                               };
-                              this.props.navigation.navigate('Zarax')
+                              this.props.navigation.navigate('Zarax');
+                              this.props.getScreamForZarax(screamId);
                               this.props.getScream(screamId, header);
                         }}
                         >

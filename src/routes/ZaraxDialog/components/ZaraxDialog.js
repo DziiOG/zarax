@@ -105,7 +105,6 @@ export class ZaraxDialog extends Component {
     const {
       body,
       commentCount,
-      comments,
       createdAt,
       likeCount,
       screamId,
@@ -118,7 +117,7 @@ export class ZaraxDialog extends Component {
 
             <Container>
                 <Fragment>
-                {this.props.uiLoading == false && this.props.screamId === screamId ? (
+                {this.props.screamId === screamId ? (
                     this.props.azarax ? (
                     <Content>
                         <Card>

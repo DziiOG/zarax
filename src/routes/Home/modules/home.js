@@ -1,6 +1,8 @@
 import update from "react-addons-update";
 import constants from "./actionConstants";
 import axios from "axios";
+import final from "../../SignIn/modules/actionConstants";
+const { SET_NOTIFICATIONS} = final;
 
 const {
   GET_SCREAMS,
@@ -16,10 +18,21 @@ const {
   UI_LOADING,
   FETCH_PRESSED_SCREAM_ID,
   SET_SCREAMS_OF_USER,
+  GET_SCREAM_FOR_ZARAX
   
 } = constants;
 
 //Actions
+
+export function getScreamForZarax(screamId){
+  return((dispatch)=>{
+    dispatch({
+      type:GET_SCREAM_FOR_ZARAX,
+      payload:screamId
+    })
+  })
+}
+
 
 export function getThisUserScreams(userHandle, header) {
     return((dispatch)=>{
@@ -217,6 +230,41 @@ export function getScreams() {
   };
 }
 
+export function getScreamsAndNotificationsContext(header) {
+  // console.log("I am being executed");
+ 
+   return (dispatch) => {
+ 
+     axios
+       .get("/screams")
+       .then((res) => {
+       
+         dispatch({
+           type: GET_SCREAMS,
+           payload: res.data,
+         });
+        // console.log("i have been successful you can check props now");
+         //console.log(res.data);
+     
+       })
+       .catch((err) => {
+        
+         console.log(err);
+       });
+
+
+       axios.get("/user", header).then((res)=>{
+          dispatch({
+            type: SET_NOTIFICATIONS,
+            payload: res.data.notifications
+          })
+       }).catch((err)=>{
+         console.log(err)
+       })
+
+   };
+ }
+
 export function deleteScream(screamId, header) {
   return (dispatch) => {
     axios
@@ -344,6 +392,10 @@ function handleLikeScream(state, action) {
 
   return {
     ...state,
+    azarax: {
+      ...state.azarax,
+      likeCount: state.azarax.likeCount + 1
+    }
   };
 }
 
@@ -355,6 +407,10 @@ function handleUnLikeScream(state, action) {
 
   return {
     ...state,
+    azarax: {
+      ...state.azarax,
+      likeCount: state.azarax.likeCount - 1
+    }
   };
 }
 
@@ -404,6 +460,19 @@ function handleSetUserScreams(state, action){
 }
 
 
+function handleGetSingleScreamForZarax(state, action){
+  let index = state.zarax.findIndex(
+    (scream) => scream.screamId === action.payload
+  );
+  
+  
+  return update(state, {
+    azarax: {
+      $set: state.zarax[index]
+    }
+  })
+}
+
 const ACTION_HANDLERS = {
   GET_SCREAMS: handleGetScreams,
   LOADING: handleLoading,
@@ -416,7 +485,9 @@ const ACTION_HANDLERS = {
   GET_SINGLE_SCREAM: handleGetScream,
   FETCH_PRESSED_SCREAM_ID: handleFetchScreamId,
   POST_COMMENT: handlePostComment,
-  SET_SCREAMS_OF_USER: handleSetUserScreams
+  SET_SCREAMS_OF_USER: handleSetUserScreams,
+  GET_SCREAM_FOR_ZARAX: handleGetSingleScreamForZarax,
+  POST_SCREAM: handlePostScream
 };
 
 const initialState = {

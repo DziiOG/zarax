@@ -86,6 +86,7 @@ export class PostComment extends Component {
                             numberOfLines={1}
                             textAlignVertical="auto"
                             multiline={true}
+                            
                             ></TextInput>
                         </View>
                         

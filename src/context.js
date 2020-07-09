@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Axios from 'axios';
 import {connect} from 'react-redux';
-import {getScreams} from './routes/Home/modules/home'
+import {getScreams, getScreamsAndNotificationsContext} from './routes/Home/modules/home'
 
 
 
@@ -14,15 +14,22 @@ const ProductContext = React.createContext();
     }
 
     componentDidMount(){
+        const header = {
+            headers: {
+              Authorization: this.props.FBIToken,
+            }
+        }
         //console.log(this.props.userData.credentials.bio + "THIS IS FROM CONTEXT I REPEAT")
+  
+      
     }
    
+    componentWillUnmount(){
 
-        setUserData = (userData) => {
-          
-            //console.log(userData);
-        }
+       
+    }
 
+       
     
     render() {
         return (
@@ -32,6 +39,7 @@ const ProductContext = React.createContext();
            email: this.props.userData.credentials.email,
            handle: this.props.userData.credentials.handle,
            getScreams: this.props.getScreams,
+           notifications: this.props.notifications,
             
             setUserData: this.setUserData
           
@@ -47,13 +55,18 @@ const ProductConsumer = ProductContext.Consumer;
 const mapStateToProps = state => ({
     token: state.signin.userToken || "",
     userData: state.signin.userData || "",
-    loading: state.home.loading
+    loading: state.home.loading,
+    notifications: state.signin.userData.notifications,
+    FBIToken: state.signin.FBIToken || "",
     
 });
 
 const mapActionsCreators = {
- getScreams
+ getScreams,
+ 
 };
+
+
 
 ProductProvider = connect(mapStateToProps, mapActionsCreators)(ProductProvider);
 export {ProductProvider, ProductConsumer}

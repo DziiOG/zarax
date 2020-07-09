@@ -50,7 +50,7 @@ class Home extends Component {
             (this.props.zarax.length > 0) ?
             (
               this.props.zarax.map((zarax)=> (
-               <ZaraxComponent key={zarax.screamId} getThisUserScreams={this.props.getThisUserScreams} uiLoading={this.props.uiLoading} getScream={this.props.getScream} navigation={this.props.navigation} deleteScream={this.props.deleteScream} zarax={zarax} likeScream={this.props.likeScream} unlikeScream={this.props.unlikeScream} FBIToken={this.props.FBIToken} userData={this.props.userData}></ZaraxComponent>
+               <ZaraxComponent key={zarax.screamId} getScreamForZarax={this.props.getScreamForZarax} getThisUserScreams={this.props.getThisUserScreams} uiLoading={this.props.uiLoading} getScream={this.props.getScream} navigation={this.props.navigation} deleteScream={this.props.deleteScream} zarax={zarax} likeScream={this.props.likeScream} unlikeScream={this.props.unlikeScream} FBIToken={this.props.FBIToken} userData={this.props.userData}></ZaraxComponent>
             ))
             ) : <View
             style={{
@@ -85,7 +85,7 @@ class Home extends Component {
             (this.props.zarax.length > 0) ?
             (
               this.props.zarax.map((zarax)=> (
-               <ZaraxComponent key={zarax.screamId} getThisUserScreams={this.props.getThisUserScreams} uiLoading={this.props.uiLoading} getScream={this.props.getScream} navigation={this.props.navigation} deleteScream={this.props.deleteScream} zarax={zarax} likeScream={this.props.likeScream} unlikeScream={this.props.unlikeScream} FBIToken={this.props.FBIToken} userData={this.props.userData}></ZaraxComponent>
+               <ZaraxComponent key={zarax.screamId} getScreamForZarax={this.props.getScreamForZarax} getThisUserScreams={this.props.getThisUserScreams} uiLoading={this.props.uiLoading} getScream={this.props.getScream} navigation={this.props.navigation} deleteScream={this.props.deleteScream} zarax={zarax} likeScream={this.props.likeScream} unlikeScream={this.props.unlikeScream} FBIToken={this.props.FBIToken} userData={this.props.userData}></ZaraxComponent>
             ))
             ) : <View
             style={{

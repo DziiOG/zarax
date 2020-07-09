@@ -11,7 +11,8 @@ import {
  postScream,
  getScream,
  fetchScreamId,
- getThisUserScreams
+ getThisUserScreams,
+ getScreamForZarax
 } from '../modules/home';
 import{
     getUserData
@@ -41,7 +42,8 @@ const mapActionsCreators = {
  postScream,
  getScream,
  fetchScreamId,
- getThisUserScreams
+ getThisUserScreams,
+ getScreamForZarax
 };
 
 export default connect(mapStateToProps, mapActionsCreators)(Home);

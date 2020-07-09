@@ -121,6 +121,7 @@ export class UserProfile extends Component {
                       unlikeScream={this.props.unlikeScream}
                       FBIToken={this.props.FBIToken}
                       userData={this.props.userData}
+                      getScreamForZarax={this.props.getScreamForZarax}
                     ></ZaraxProfile>
                   ))
                 )}

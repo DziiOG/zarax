@@ -4,14 +4,14 @@ import final from '../../Home/modules/actionConstants';
 import axios from 'axios';
 
 const { 
-    GET_USER_TOKEN,  SIGN_USER_OUT, GET_FBITOKEN, SET_USER, WELCOM, MARK_NOTIFICATIONS_READ } = constants;
+    GET_USER_TOKEN,  SIGN_USER_OUT, GET_FBITOKEN, SET_USER, WELCOME, MARK_NOTIFICATIONS_READ, SET_NOTIFICATIONS } = constants;
 
 const {LIKE_SCREAM, UNLIKE_SCREAM, DELETE_SCREAM } = final;  
 
 //ACTIONS
 export function markNotificationsRead(notificationsIds, header){
     return((dispatch) =>{
-       axios.post('/user', notificationsIds, header).then(()=>{
+       axios.post('/notifications', notificationsIds, header).then(()=>{
            dispatch({
                type: MARK_NOTIFICATIONS_READ,
                payload: null
@@ -189,6 +189,20 @@ const initialState = {
     welcome: false
 };
 
+function handleSetNotifications(state, action){
+
+    return{
+        ...state,
+        userData: {
+            ...state.userData,
+            notifications: [
+                action.payload
+            ]
+        }
+    }
+
+}
+
 const ACTION_HANDLERS = {
    
     GET_USER_TOKEN: handleGetUserToken,
@@ -198,7 +212,8 @@ const ACTION_HANDLERS = {
     LIKE_SCREAM: handleLikeScream,
     UNLIKE_SCREAM: handleUnLikeScream,
     WELCOME: handleWelcome,
-    MARK_NOTIFICATIONS_READ: handleMarkNotificationsRead
+    MARK_NOTIFICATIONS_READ: handleMarkNotificationsRead,
+    SET_NOTIFICATIONS: handleSetNotifications
  }
 
 export function signinscreenReducer (state = initialState, action){

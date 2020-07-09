@@ -165,6 +165,7 @@ export default class ZaraxProfile extends Component {
                                 }
                               };
                             this.props.getScream(screamId, header);
+                            this.props.getScreamForZarax(screamId)
                             this.props.navigation.navigate('Zarax')
                         }}
                         >

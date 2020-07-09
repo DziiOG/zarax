@@ -9,6 +9,7 @@ import {
   likeScream,
   unlikeScream,
   deleteScream,
+  getScreamForZarax
 } from "../../Home/modules/home";
 
 const mapStateToProps = (state) => ({
@@ -25,6 +26,7 @@ const mapActionsCreators = {
   likeScream,
   unlikeScream,
   deleteScream,
+  getScreamForZarax
 };
 
 export default connect(mapStateToProps, mapActionsCreators)(UserProfile);
