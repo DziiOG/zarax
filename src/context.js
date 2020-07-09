@@ -20,7 +20,7 @@ const ProductContext = React.createContext();
             }
         }
         //console.log(this.props.userData.credentials.bio + "THIS IS FROM CONTEXT I REPEAT")
-  
+        console.log(this.props.showReload + "this is from context")
       
     }
    
@@ -40,6 +40,7 @@ const ProductContext = React.createContext();
            handle: this.props.userData.credentials.handle,
            getScreams: this.props.getScreams,
            notifications: this.props.notifications,
+           showReload: this.props.showReload,
             
             setUserData: this.setUserData
           
@@ -58,6 +59,7 @@ const mapStateToProps = state => ({
     loading: state.home.loading,
     notifications: state.signin.userData.notifications,
     FBIToken: state.signin.FBIToken || "",
+    showReload: state.home.showReload 
     
 });
 

@@ -18,7 +18,8 @@ const {
   UI_LOADING,
   FETCH_PRESSED_SCREAM_ID,
   SET_SCREAMS_OF_USER,
-  GET_SCREAM_FOR_ZARAX
+  GET_SCREAM_FOR_ZARAX,
+  SHOW_RELOAD
   
 } = constants;
 
@@ -204,6 +205,11 @@ export function getScreams() {
       type: LOADING,
       payload: true,
     });
+
+    dispatch({
+      type: SHOW_RELOAD,
+      payload: false
+    })
     axios
       .get("/screams")
       .then((res) => {
@@ -218,13 +224,20 @@ export function getScreams() {
         });
        // console.log("i have been successful you can check props now");
         //console.log(res.data);
-    
+        dispatch({
+          type: SHOW_RELOAD,
+          payload: true
+        })
       })
       .catch((err) => {
         dispatch({
           type: LOADING,
           payload: false,
         });
+        dispatch({
+          type: SHOW_RELOAD,
+          payload: true
+        })
         console.log(err);
       });
   };
@@ -472,6 +485,13 @@ function handleGetSingleScreamForZarax(state, action){
     }
   })
 }
+function handleShowReload(state, action){
+  return update(state, {
+    showReload: {
+      $set: action.payload,
+    },
+  });
+}
 
 const ACTION_HANDLERS = {
   GET_SCREAMS: handleGetScreams,
@@ -487,7 +507,8 @@ const ACTION_HANDLERS = {
   POST_COMMENT: handlePostComment,
   SET_SCREAMS_OF_USER: handleSetUserScreams,
   GET_SCREAM_FOR_ZARAX: handleGetSingleScreamForZarax,
-  POST_SCREAM: handlePostScream
+  POST_SCREAM: handlePostScream,
+  SHOW_RELOAD: handleShowReload
 };
 
 const initialState = {
@@ -499,7 +520,8 @@ const initialState = {
   screamId: "",
   commentModal: false,
   screamsOfUser: [],
-  userInfo: {}
+  userInfo: {},
+  showReload: true
 };
 
 export function homeReducer(state = initialState, action) {

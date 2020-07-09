@@ -7,7 +7,7 @@ import {
   DrawerItem,
 } from "@react-navigation/drawer";
 import jwtDecode from "jwt-decode";
-import { View, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Image, TouchableOpacity, Dimensions } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -29,7 +29,8 @@ import ProfileContainer from "../routes/Profile/containers/ProfileContainer";
 import NotificationsContainer from "../routes/Notifications/containers/NotificationsContainer";
 import ZaraxComponentContainer from "../routes/ZaraxDialog/containers/ZaraxComponentContainer";
 import UserProfileContainer from "../routes/UserProfile/containers/UserProfileContainer";
-
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
 const ZaraxDialogStack = createStackNavigator();
 const UserProfileStack = createStackNavigator();
 
@@ -306,6 +307,28 @@ function HomeStackScreen({ navigation }) {
                   autoPlay
                   loop
                 />
+                {
+                     value.showReload ?
+                     <TouchableOpacity
+                     style={{
+                        position: "absolute",
+                       width: 50,
+                       height: 50,
+                       left: width * 0.44,
+                       justifyContent: "center",
+                        alignItems: "center",
+                     }}
+                       onPress={() => {
+                         value.getScreams()
+                       }}
+                     >
+                       <MaterialCommunityIcons
+                         name="reload"
+                         size={30}
+                         color={"#5cccee"}
+                       ></MaterialCommunityIcons>
+                     </TouchableOpacity> : null
+                }
               </View>
             ),
             headerTitleAlign: "center",
@@ -316,18 +339,8 @@ function HomeStackScreen({ navigation }) {
               alignItems: "center",
             },
             headerRight: (props) => {
-              <TouchableOpacity
-                onPress={() => {
-                  value.getScreams()
-                }}
-              >
-                <Avatar.Image
-                  source={{
-                    uri: value.imageUrl,
-                  }}
-                  size={30}
-                ></Avatar.Image>
-              </TouchableOpacity>
+              console.log(value.showReload + "from app bar")
+             
             },
 
             headerLeft: (props) => (
@@ -345,6 +358,10 @@ function HomeStackScreen({ navigation }) {
               </TouchableOpacity>
             ),
             headerLeftContainerStyle: { marginLeft: 15, marginTop: 0 },
+            headerRightContainerStyle: {
+             
+            },
+            
             headerStyle: {
               height: 50,
             },
